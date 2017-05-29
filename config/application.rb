@@ -15,7 +15,7 @@ module Qna2
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
 
-    config.active_record.raise_in_transactional_callbacks = true
+    
 
     config.generators do |g|
         g.test_framework :rspec,

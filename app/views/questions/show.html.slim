@@ -1,0 +1,12 @@
+H1 Вопрос
+h1 = @question.title
+p= @question.body
+
+h2 Ответ:
+
+= form_for([@question, Answer.new]) do |f|
+  =f.label :body
+  =f.text_area :body
+  =f.submit 'Ответить'
+
+
