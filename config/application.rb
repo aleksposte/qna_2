@@ -14,8 +14,7 @@ module Qna2
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
-
-    config.active_record.raise_in_transactional_callbacks = true
+    # config.active_record.raise_in_transactional_callbacks = true
 
     config.generators do |g|
         g.test_framework :rspec,
@@ -27,6 +26,6 @@ module Qna2
                          controller_specs: true
         g.fixture_replacement :factory_girl, dir: 'spec/factories'
     end
-
   end
+  
 end
