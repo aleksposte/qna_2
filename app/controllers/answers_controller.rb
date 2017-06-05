@@ -7,11 +7,11 @@ class AnswersController < ApplicationController
   def create
     @answer = @question.answers.create(answer_params)
     if @answer.save
-      flash[:notice] = 'Ответ создан'
+      flash[:notice] = 'Your answer was successfully created.'
       redirect_to question_path(@question)
 
     else
-      flash[:alert] = 'Ответ не создан'
+      flash[:alert] = 'Your answer has an error.'
       render :new
     end
   end

@@ -1,4 +1,5 @@
 class QuestionsController < ApplicationController
+  before_action :authenticate_user!, except: [:index, :show]
   before_action :load_question, only: [:show]
 
   def index
@@ -17,10 +18,10 @@ class QuestionsController < ApplicationController
     @question = Question.new(question_params)
 
     if @question.save
-      flash[:notice] = 'Вопрос создан'
+      flash[:notice] = 'Your question was successfully created.'
       redirect_to @question
     else
-      flash[:alert] = 'Вопрос не создан'
+      flash[:alert] = 'Your question has errors.'
       render :new
     end
   end
