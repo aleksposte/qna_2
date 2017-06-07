@@ -7,7 +7,7 @@ RSpec.describe QuestionsController, type: :controller do
     let(:questions) { create_list(:question,2) }
 
     before { get :index }
-    
+
     it 'populates an array of all questions' do
       expect(assigns(:questions)).to match_array(questions)
     end
@@ -43,7 +43,6 @@ RSpec.describe QuestionsController, type: :controller do
     it 'renders new view' do
       expect(response).to render_template :new
     end
-
   end
 
   describe 'POST #create' do
@@ -68,6 +67,33 @@ RSpec.describe QuestionsController, type: :controller do
       it 're-renders new view' do
         post :create, params: { question: attributes_for(:invalid_question) }
         expect(response).to render_template :new
+      end
+    end
+  end
+
+  describe 'DELETE #destroy' do
+    let!(:question) { create(:question) }
+
+    context 'delete his question'do
+      it 'delete own question' do
+        sign_in(question.user)
+        expect { delete :destroy, params: { id: question } }.to change(question.user.questions, :count).by(-1)
+      end
+
+      it 'redirects to index view' do
+        sign_in(question.user)
+        delete :destroy, params: { id:question }
+        expect(responce).to redirect_to questions_path
+      end
+    end
+
+    context 'delete others question' do
+      it 'doesnt delete others questions' do
+
+      end
+
+      it 'show delete error ' do
+        expect { delete :destroy, params: { id: question } }.not_to change(Question, :count)
       end
     end
   end
