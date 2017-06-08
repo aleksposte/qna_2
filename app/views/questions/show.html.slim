@@ -2,7 +2,6 @@ h1 Question
 
 p Title:
 = @question.title
-
 p Body:
 = @question.body
 
@@ -12,11 +11,12 @@ ul
   - @question.answers.each do |answer|
     li id="answer#{answer.id}"
       = answer.body
+      - if user_signed_in? && current_user.author_of?(answer)
+        = link_to 'Delete', question_answer_path(@question, answer), method: :delete
 
+h2 Answer:
 = form_for [@question, Answer.new] do |f|
-
   div
     p = f.label :body, 'Answer'
     p = f.text_area :body
-
   = f.submit 'Answer'

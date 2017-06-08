@@ -9,13 +9,13 @@ feature 'Create answer', %q{
   given(:user) { create(:user) }
   given(:question) { create(:question) }
 
-  scenario 'Authentificatred user create valid answer' do
+  scenario 'Authentificatred user create answer' do
     sign_in(user)
 
     visit question_path(question)
     fill_in 'Answer', with: 'MyText'
     click_on 'Answer'
-    save_and_open_page
+    # save_and_open_page
 
     expect(page).to have_content 'Your answer successfully created.'
     expect(page).to have_content 'MyText'

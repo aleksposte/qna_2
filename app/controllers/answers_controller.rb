@@ -1,7 +1,7 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!
   before_action :load_question
-  before_action :load_answer, only: [:destroy]
+  # before_action :load_answer, only: [:destroy]
 
   def new
     @answer = Answer.new
@@ -17,6 +17,15 @@ class AnswersController < ApplicationController
       flash[:alert] = 'Your answer has an error.'
       render 'question/show'
     end
+  end
+
+  def destroy
+    @answer = Answer.find(params[:id])
+    if current_user.author_of?(@answer)
+      @answer.destroy
+      flash[:notice] = 'Your answer successfully deleted.'
+    end
+    redirect_to @answer.question
   end
 
   private
