@@ -1,12 +1,22 @@
-H1 Вопрос
-h1 = @question.title
-p= @question.body
+h1 Question
 
-h2 Ответ:
+p Title:
+= @question.title
 
-= form_for([@question, Answer.new]) do |f|
-  =f.label :body
-  =f.text_area :body
-  =f.submit 'Ответить'
+p Body:
+= @question.body
 
+h2 Answers:
 
+ul
+  - @question.answers.each do |answer|
+    li id="answer#{answer.id}"
+      = answer.body
+
+= form_for [@question, Answer.new] do |f|
+
+  div
+    p = f.label :body, 'Answer'
+    p = f.text_area :body
+
+  = f.submit 'Answer'

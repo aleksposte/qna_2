@@ -21,8 +21,8 @@ feature 'Create question', %q{
 
     visit questions_path
     click_on 'Ask question'
-    fill_in 'Title', with: 'Test question'
-    fill_in 'Body', with: 'Test body'
+    fill_in 'Title', with: 'MyString'
+    fill_in 'Body', with: 'MyText'
     # save_and_open_page
     click_on 'Create'
 
