@@ -1,7 +1,9 @@
 = link_to 'Ask question', new_question_path
 
 -@questions.each do |question|
-  p = link_to question.title, question
+  div
+    p = link_to question.title, question
+    p  = question.body
 
 - if user_signed_in? && current_user.author_of?(@question)
   p = link_to 'Delete', question, method: :delete

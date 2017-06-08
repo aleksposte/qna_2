@@ -15,13 +15,13 @@ feature 'Delete answer', %q{
 
     visit question_path(answer.question)
     answer_body = answer.body
-    save_and_open_page
+    # save_and_open_page
     click_on 'Delete'
 
     expect(page).not_to have_content answer_body
   end
 
-  scenario 'Authentificated user deletes others answer' do
+  scenario 'Authenticated user deletes others answer' do
     user_1 = create(:user)
     sign_in(user_1)
 
