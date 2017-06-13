@@ -2,10 +2,11 @@ require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
   let(:question) { create(:question) }
+  let(:other_question) { create(:question) }
+  let(:user) { create(:user) }
 
   describe 'GET #index' do
     let(:questions) { create_list(:question,2) }
-
     before { get :index }
 
     it 'populates an array of all questions' do
@@ -18,9 +19,7 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'GET #show' do
-    before do
-      get :show, params: { id: question }
-    end
+    before { get :show, params: { id: question } }
 
     it 'assings the requested question to @question' do
       expect(assigns(:question)).to eq question
@@ -33,7 +32,6 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe 'GET #new' do
     sign_in_user
-
     before { get :new }
 
     it 'assigns new question to @question' do
@@ -51,6 +49,10 @@ RSpec.describe QuestionsController, type: :controller do
     context 'with valid attributes' do
       it 'saves the new question to the db' do
         expect { post :create, params: { question: attributes_for(:question) } }.to change(Question, :count).by(1)
+      end
+
+      it 'assins current user to question' do
+        expect { post :create, params: { question: attributes_for(:question) } }.to change(@user.questions, :count).by(1)
       end
 
       it 'redirects to show view' do
@@ -72,30 +74,34 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'DELETE #destroy' do
-    let!(:question) { create(:question) }
+    before { question }
+    before { other_question }
 
     context 'delete his question'do
       it 'delete own question' do
         sign_in(question.user)
-        expect { delete :destroy, params: { id: question } }.to change(question.user.questions, :count).by(-1)
+        expect { delete :destroy, params: { id: question } }.to change(Question, :count).by(-1)
       end
 
       it 'redirects to index view' do
         sign_in(question.user)
-        delete :destroy, params: { id:question }
-        expect(responce).to redirect_to questions_path
+        delete :destroy, params: { id: question }
+        expect(response).to redirect_to questions_path
       end
     end
 
     context 'delete others question' do
       it 'doesnt delete others questions' do
-
+        sign_in(question.user)
+        expect { delete :destroy, params: { id: other_question } }.not_to change(Question, :count)
       end
 
-      it 'show delete error ' do
-        expect { delete :destroy, params: { id: question } }.not_to change(Question, :count)
+      it 'redirects to index view' do
+        sign_in(question.user)
+        delete :destroy, params: { id: other_question }
+        expect(flash[:alert]).to eq 'Your can`t delete others questions'
+        expect(response).to redirect_to questions_path
       end
     end
   end
-
 end

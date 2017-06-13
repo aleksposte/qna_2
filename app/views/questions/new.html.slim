@@ -1,5 +1,8 @@
-h1 Задать вопрос
+h1 Ask question
+
 = form_for @question do |f|
+  = render 'common/errors', object: @question if @answer.present?
+
   = f.label :title
   = f.text_field :title
   = f.label :body

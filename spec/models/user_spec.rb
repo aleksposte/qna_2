@@ -11,16 +11,16 @@ RSpec.describe User, type: :model do
 
   describe 'author_of?' do
     let(:user) { create(:user) }
-    let(:user1) { create(:user) }
+    let(:other_user) { create(:user) }
     let(:question) { create(:question, user: user) }
 
     it 'should return true if user is an owner of a question' do
-      expect(user.author_of? question).to eq true
+      expect(user).to be_author_of(question)
     end
 
     it 'should return false if user is not an owner of a question' do
-      expect(user1.author_of? question).to eq false
+      # expect(other_user.author_of? question).to eq false
+      expect(other_user).to_not be_author_of(question)
     end
   end
-
 end

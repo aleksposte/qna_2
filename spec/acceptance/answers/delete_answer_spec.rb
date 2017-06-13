@@ -12,27 +12,21 @@ feature 'Delete answer', %q{
 
   scenario 'Authenticated user deletes his answer' do
     sign_in(answer.user)
-
     visit question_path(answer.question)
-    answer_body = answer.body
-    # save_and_open_page
     click_on 'Delete'
-
-    expect(page).not_to have_content answer_body
+    # save_and_open_page
+    expect(page).to have_content 'Your answer successfully deleted'
   end
 
   scenario 'Authenticated user deletes others answer' do
-    user_1 = create(:user)
-    sign_in(user_1)
-
+    other_user = create(:user)
+    sign_in(other_user)
     visit question_path(answer.question)
-
     expect(page).not_to have_link 'Delete'
   end
 
   scenario 'Non-Authenticated user tries to delete answer' do
     visit question_path(answer.question)
-
     expect(page).not_to have_link 'Delete'
   end
 

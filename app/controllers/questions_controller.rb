@@ -21,7 +21,7 @@ class QuestionsController < ApplicationController
       flash[:notice] = 'Your question was successfully created.'
       redirect_to @question
     else
-      flash[:alert] = 'Your question has errors.'
+      # flash[:alert] = 'Your question has errors.'
       render :new
     end
   end
@@ -30,6 +30,8 @@ class QuestionsController < ApplicationController
     if current_user.author_of?(@question)
       @question.destroy!
       flash[:notice] = 'Your question was successfully deleted.'
+    else
+      flash[:alert] = 'Your can`t delete others questions'
     end
     redirect_to questions_path
   end
@@ -42,5 +44,4 @@ class QuestionsController < ApplicationController
   def question_params
     params.require(:question).permit(:title, :body)
   end
-
 end
