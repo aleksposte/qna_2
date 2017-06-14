@@ -30,11 +30,3 @@ feature 'Delete question', %q{
     expect(page).not_to have_link 'Delete'
   end
 end
-
-
-
-
-
-
-
-

@@ -16,6 +16,7 @@ feature 'Delete answer', %q{
     click_on 'Delete'
     # save_and_open_page
     expect(page).to have_content 'Your answer successfully deleted'
+    expect(page).not_to have_content answer.body
   end
 
   scenario 'Authenticated user deletes others answer' do
@@ -29,5 +30,4 @@ feature 'Delete answer', %q{
     visit question_path(answer.question)
     expect(page).not_to have_link 'Delete'
   end
-
 end

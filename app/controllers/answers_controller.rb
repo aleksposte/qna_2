@@ -20,7 +20,7 @@ class AnswersController < ApplicationController
       @answer.destroy
       flash[:notice] = 'Your answer successfully deleted.'
     else
-      flash[:alert]) =  'Your can`t delete others answer'
+      flash[:alert] =  "Your can`t delete others answer"
     end
     redirect_to @answer.question
   end
