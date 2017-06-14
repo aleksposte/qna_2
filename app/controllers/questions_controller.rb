@@ -1,4 +1,5 @@
 class QuestionsController < ApplicationController
+  before_action :authenticate_user!, except: [:index, :show]
   before_action :load_question, only: [:show]
 
   def index
@@ -17,12 +18,22 @@ class QuestionsController < ApplicationController
     @question = Question.new(question_params)
 
     if @question.save
-      flash[:notice] = 'Вопрос создан'
+      flash[:notice] = 'Your question was successfully created.'
       redirect_to @question
     else
-      flash[:alert] = 'Вопрос не создан'
+      # flash[:alert] = 'Your question has errors.'
       render :new
     end
+  end
+
+  def destroy
+    if current_user.author_of?(@question)
+      @question.destroy!
+      flash[:notice] = 'Your question was successfully deleted.'
+    else
+      flash[:alert] = 'Your can`t delete others questions'
+    end
+    redirect_to questions_path
   end
 
   private
@@ -33,5 +44,4 @@ class QuestionsController < ApplicationController
   def question_params
     params.require(:question).permit(:title, :body)
   end
-
 end
