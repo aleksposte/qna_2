@@ -8,17 +8,14 @@ class AnswersController < ApplicationController
     @answer.user = current_user
     if @answer.save
       flash[:notice] = 'Your answer successfully created.'
-      # redirect_to question_path(@question)
     else
       flash[:alert] = 'Your answer has an error.'
-      # render 'questions/show'
     end
   end
 
   def destroy
     if current_user.author_of? @answer
       @answer.destroy
-      # flash[:notice] = 'Your answer successfully deleted.'
     else
       flash[:alert] =  "Your can`t delete others answer"
     end

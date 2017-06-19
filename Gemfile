@@ -57,14 +57,12 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 # My gems
 
 gem 'slim-rails'
-# gem 'bootstrap-sass'
 
 group :test, :development do 
   gem 'rspec-rails'
   gem 'factory_girl_rails'
 
   gem 'database_cleaner'
-  # gem 'capybara-webkit'
   gem 'chromedriver-helper'
 end
 
