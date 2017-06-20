@@ -9,7 +9,7 @@ feature 'Create answer', %q{
   given(:user) { create(:user) }
   given(:question) { create(:question) }
 
-  scenario 'Authentificatred user create answer' do
+  scenario 'Authentificatred user create answer', js: true do
     sign_in(user)
     visit question_path(question)
     fill_in 'Answer', with: 'MyText'
@@ -19,16 +19,16 @@ feature 'Create answer', %q{
     expect(page).to have_content 'MyText'
   end
 
-  scenario 'Authentificated user creates invalid answer' do
+  scenario 'Authentificated user creates invalid answer',js: true do
     sign_in(user)
     visit question_path(question)
     click_on 'Answer'
     expect(page).to have_content "Body can't be blank"
   end
 
-  scenario 'Non-authentificated user tries to create answer' do
+  scenario 'Non-authentificated user tries to create answer', js: true do
     visit question_path(question)
-    click_on 'Answer'
+    expect(page).not_to have_content 'Answer'
     expect(page).to have_content 'You need to sign in or sign up before continuing.'
   end
 end
