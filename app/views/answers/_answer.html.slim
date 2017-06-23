@@ -1,4 +1,11 @@
 - if answer.persisted?
   p = answer.body
   - if current_user && current_user.author_of?(answer)
-     = link_to 'Delete', question_answer_path(@question, answer), method: :delete
+     = link_to 'Edit'
+     p
+       = form_for [@question, answer], remote: true do |f|
+         = f.label :body, 'Answer'
+         = f.text_area :body
+         = f.submit 'Save'
+       end
+     p= link_to 'Delete', question_answer_path(@question, answer), method: :delete
