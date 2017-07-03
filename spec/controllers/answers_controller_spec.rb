@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
-  let(:question) { create(:question) }
-  let(:answer) { create(:answer, question: question) }
+  let!(:question) { create(:question) }
+  let!(:answer) { create(:answer, question: question) }
   let(:answer) { create(:answer, user: user) }
   let(:other_answer) { create(:answer, user: other_user) }
   let(:user) { create(:user) }
@@ -36,6 +36,42 @@ RSpec.describe AnswersController, type: :controller do
       end
     end
   end
+
+  describe 'PATH #update' do
+    let(:answer) { create(:answer, question: question) }
+
+    it 'assigns answer to @answer' do
+      patch :update, params: { id: answer, answer: attributes_for(:answer), format: :js }
+      expect(assigns(:answer)).to eq answer
+    end
+
+    it 'assigns the question' do
+      patch :update, params: { id: answer, answer: attributes_for(:answer), format: :js }
+      expect(assigns(:question)).to eq question
+    end
+
+    it 'change answer attributes' do
+      sign_in(answer.user)
+      patch :update, params: { id: answer, answer: { body: 'new body' }, format: :js }
+      answer.reload
+      expect(answer.body).to eq 'new body'
+    end
+
+    it 'does not change other answer' do
+      let!(:other_user) { create(:user) }
+
+      sign_in(:other_user)
+      patch :update, params: { id: answer, answer: { body: 'new body' }, forvat: :js }
+      answer.reload
+      expect(answer.body).not_to eq 'new body'
+    end
+
+    it 'render update template' do
+      patch :update, params: { id: answer, answer: attributes_for(:answer), format: :js }
+      expect(responce).to render_template :update
+    end
+  end
+
 
   describe 'DELETE #destroy' do
     before { answer }

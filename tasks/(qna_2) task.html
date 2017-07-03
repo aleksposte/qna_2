@@ -17,6 +17,24 @@ task-7
 - На 14:20 возникла техническа проблема - пропадает изображение на 7 секунд - но пониманию это не мешает, т.к. идет объяснение без написания кода.
 - Проверку на авторство по-прежнему реализуем вручную на уровне контроллеров. Это нужно тестировать как на уровне acceptance-тестов, так и на уровне тестов контроллера.
 
+_answer
+- if answer.persisted?
+p = answer.body
+- if current_user && current_user.author_of?(answer)
+= link_to 'Edit', '', class: 'edit-answer-link', data: {answer_id: answer.id}
+p
+= form_for [@question, answer], remote: true, html: {id: "edit-answer-#{answer.id}"} do |f|
+= f.label :body, 'Answer'
+= f.text_area :body
+= f.submit 'Save'
+end
+p= link_to 'Delete', question_answer_path(@question, answer), method: :delete
+
+
+
+
+
+
 task-6
 
 Реализовать добавление ответов к вопросам через ajax, покрыть все тестами. При этом, нужно добавлять только вновь созданный ответ к вопросу, без повторного рендеринга всего списка ответов.

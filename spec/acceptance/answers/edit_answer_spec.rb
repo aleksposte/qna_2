@@ -10,8 +10,7 @@ feature 'Answer editing', %q{
   given(:question) { create(:question) }
   given(:answer) { create(:answer, question: question) }
 
-  # Non-authentificated user
-  scenario 'Non-authentificated user try to edit question' do
+  scenario 'Non-authentificated user try to edit question', js: true do
     visit question_path(question)
     expect(page).not_to have_content 'Edit'
   end
@@ -23,13 +22,13 @@ feature 'Answer editing', %q{
       visit question_path(question)
     end
 
-    scenario 'Sees link to Edit' do
+    scenario 'sees link to Edit', js: true do
       within '.answers' do
-        expect(page).to have_content 'Edit'
+        expect(page).to have_link 'Edit'
       end
     end
 
-    scenario 'Try to edit his question', js: true do
+    scenario 'try to edit his question', js: true do
       click_on 'Edit'
       within '.answers' do
         fiil_in 'Answer', with: 'edited answer'
@@ -40,8 +39,12 @@ feature 'Answer editing', %q{
       expect(page).not_to have_selector 'textarea'
     end
 
-    scenario "Try to edit other user's question" do
-
+    scenario "try to edit other user's question", js: true do
+      other_user = create(:user)
+      visit question_path(question)
+      within '.answers' do
+        expect(page).not_to have_content 'Edit'
+       end
     end
   end
 end
