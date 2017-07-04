@@ -26,6 +26,15 @@ class AnswersController < ApplicationController
     redirect_to @answer.question
   end
 
+  def set_best_answer
+    if current_user.author_of?(@question)
+       @answer.set_best_answer
+       flash[:notice] = "You've set the best answer"
+    else
+       flash[:alert] = "You're not allowed to set the best answer for this question"
+    end
+  end
+
   private
 
   def load_question

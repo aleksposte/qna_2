@@ -62,6 +62,7 @@ group :test, :development do
   gem 'capybara-webkit'
   gem 'database_cleaner'
   gem 'chromedriver-helper'
+  gem 'coffee-rails'
 end
 
 group :test do
