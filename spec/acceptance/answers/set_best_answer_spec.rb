@@ -20,7 +20,7 @@ feature 'Best answer', %q{
   describe 'Authenticated author' do
     before do
       sign_in user
-      visit question_path(quiestion)
+      visit question_path(question)
     end
 
     scenario 'sees radio buttons' do

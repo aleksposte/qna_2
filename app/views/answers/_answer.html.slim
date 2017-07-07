@@ -13,3 +13,20 @@
       = f.label :body, "Answer"
       = f.text_area :body
       = f.submit 'Save'
+
+
+- if answer.persisted?
+  li id='answer_#{answer.id}'
+    - if user_signed_in? && current_user.author_of?(@question)
+      = radio_button_tag :best_answer, answer.id, answer.best_answer?, class: 'set-best-answer', data: { answer_id: answer.id, question_id: @question.id }
+      = label_tag :best_answer, 'Set best answer'
+
+    = answer.body
+    - if user_signed_in? && current_user.author_of?(answer)
+      = link_to 'Edit', '', class: 'edit-answer-link', data: {answer_id: answer.id}, remote: true
+      = link_to 'Delete', answer, method: :delete, remote: true
+
+    = form_for answer, remote: true, html: { id: "edit-answer-#{answer.id}" } do |f|
+      = f.label :body, 'Answer'
+      = f.text_area :body
+      = f.submit 'Save'

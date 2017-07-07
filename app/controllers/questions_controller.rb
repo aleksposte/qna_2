@@ -11,6 +11,11 @@ class QuestionsController < ApplicationController
     @answer = @question.answers.build
   end
 
+  # def show
+  #   @answer = @question.answers.new
+  #   @answer.attachments.build
+  # end
+
   def new
     @question = Question.new
   end
