@@ -1,4 +1,4 @@
-require 'rails_helper'
+require_relative 'acceptance_helper'
 
 feature 'Create answer', %q{
   In order to answer question
@@ -19,7 +19,7 @@ feature 'Create answer', %q{
     expect(page).to have_content 'MyText'
   end
 
-  scenario 'Authentificated user creates invalid answer',js: true do
+  scenario 'Authentificated user creates invalid answer', js: true do
     sign_in(user)
     visit question_path(question)
     click_on 'Answer'

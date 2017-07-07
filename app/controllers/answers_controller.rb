@@ -13,6 +13,10 @@ class AnswersController < ApplicationController
     end
   end
 
+  def update
+    @answer.update(answer_params) if current_user.author_of?(@answer)
+  end
+
   def destroy
     if current_user.author_of? @answer
       @answer.destroy
@@ -20,6 +24,15 @@ class AnswersController < ApplicationController
       flash[:alert] =  "Your can`t delete others answer"
     end
     redirect_to @answer.question
+  end
+
+  def set_best_answer
+    if current_user.author_of?(@question)
+       @answer.set_best_answer
+       flash[:notice] = "You've set the best answer"
+    else
+       flash[:alert] = "You're not allowed to set the best answer for this question"
+    end
   end
 
   private
