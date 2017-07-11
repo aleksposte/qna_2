@@ -55,6 +55,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 # My gems
 
 gem 'slim-rails'
+gem 'carrierwave'
 
 group :test, :development do 
   gem 'rspec-rails'
