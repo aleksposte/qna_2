@@ -2,9 +2,21 @@ h1 Ask question
 
 = form_for @question do |f|
   = render 'common/errors', object: @question if @question.present?
+  p
+    = f.label :title
+    = f.text_field :title
+  p
+    = f.label :body
+    = f.text_area :body
 
-  = f.label :title
-  = f.text_field :title
-  = f.label :body
-  = f.text_area :body
+  p Attachment:
+  .attachments
+    = f.fields_for :attachments do |a|
+      = f.label :file
+      = f.file_field :file
+      = link_to_remove_association "Remove file", f
+
+      .links
+      = link_to_add_association 'add file', f, :attachments
+
   = f.submit 'Create'
