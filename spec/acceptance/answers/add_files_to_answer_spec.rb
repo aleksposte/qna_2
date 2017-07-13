@@ -22,6 +22,7 @@ feature 'Add files to answer', %q{
     click_on 'Create'
     within 'answers' do
       expect(page).to have_link 'spec_helper_rb', href: '/uploads/attachment/file/1/spec_helper.rb'
+      expect(page).to have_link 'spec_helper_rb', href: '/uploads/attachment/file/2/spec_helper.rb'
     end
   end
 end
