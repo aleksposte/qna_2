@@ -58,6 +58,7 @@ gem 'slim-rails'
 gem 'carrierwave'
 gem 'remotipart'
 gem 'cocoon'
+gem 'twitter-bootstrap-rails'
 
 group :test, :development do 
   gem 'rspec-rails'
