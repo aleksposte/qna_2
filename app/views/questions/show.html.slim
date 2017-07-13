@@ -18,8 +18,19 @@ h2 Answer:
 - if user_signed_in?
 = form_for [@question, Answer.new], remote: true do |f|
   = render 'common/errors', object: @answer if @answer.present?
+    p
+      = f.label :body, 'Answer'
+      = f.text_area :body
 
-  div
-    p = f.label :body, 'Answer'
-    p = f.text_area :body
+    p Attachments:
+    .attachments
+      = f.fields_for :attachments do |a|
+        = a.label :file
+        = a.file_field :file
+        /= link_to_remove_association "Remove file", a
+
+      .links
+        /= link_to_add_association 'Add file', f, :attachments
+
+
   = f.submit 'Answer'

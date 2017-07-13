@@ -56,6 +56,8 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'slim-rails'
 gem 'carrierwave'
+gem 'remotipart'
+gem 'cocoon'
 
 group :test, :development do 
   gem 'rspec-rails'
