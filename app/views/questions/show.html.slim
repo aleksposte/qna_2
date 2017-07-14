@@ -5,7 +5,7 @@ p Title:
 p Body:
 = @question.body
 p Attachments:
-ul
+ul.question_files
 - @question.attachments.each do |a|
   li id="attachment_#{a.id}"
     = link_to a.file.identifier, a.file.url
