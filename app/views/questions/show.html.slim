@@ -4,6 +4,14 @@ p Title:
 = @question.title
 p Body:
 = @question.body
+p Attachments:
+ul.question_files
+- @question.attachments.each do |a|
+  li id="attachment_#{a.id}"
+    = link_to a.file.identifier, a.file.url
+    '
+    - if user_signed_in? && current_user.author_of?(@question)
+      = link_to 'Delete file', '', class: 'delete-attachment-link', data: {attachment_id: a.id}
 
 .answers
   = render @question.answers
@@ -13,9 +21,16 @@ h2 Answer:
 - if user_signed_in?
 = form_for [@question, Answer.new], remote: true do |f|
   = render 'common/errors', object: @answer if @answer.present?
+  p
+    = f.label :body
+    = f.text_area :body
 
-  div
-    p = f.label :body, 'Answer'
-    p = f.text_area :body
+  p Attachments:
+  .attachments
+    = f.fields_for :attachments do |a|
+      = render 'attachment_fields', f: a
+
+    .links
+      = link_to_add_association 'Add file', f, :attachments
+
   = f.submit 'Answer'
-

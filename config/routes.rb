@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-
+  delete 'attachments/:id' => 'attachments#destroy'
   devise_for :users
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
@@ -11,10 +11,3 @@ Rails.application.routes.draw do
 
   root to: "questions#index"
 end
-
-#
-# resources :questions do
-#   resources :answers, shallow: true do
-#     patch :set_best, on: :member
-#   end
-# end
