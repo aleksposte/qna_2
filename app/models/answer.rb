@@ -2,6 +2,7 @@ class Answer < ApplicationRecord
   belongs_to :question, foreign_key: 'question_id'
   belongs_to :user
   has_many :attachments, as: :attachable, dependent: :destroy
+  include Votable
   validates :body, presence: true
 
   accepts_nested_attributes_for :attachments, reject_if: :all_blank, allow_destroy: true
